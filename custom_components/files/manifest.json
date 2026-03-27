@@ -6,5 +6,6 @@
   "dependencies": [],
   "requirements": [],
   "codeowners": ["@TheScubadiver"],
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "icon": "images/logo.png"
 }
