@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "FileTrack Setup",
+        "description": "Provide the details of the folder you want to track.",
+        "data": {
+          "name": "Sensor name",
+          "folder": "Folder path (e.g., /config/www/camera)",
+          "filter": "File filter (e.g., *.jpg)",
+          "sort": "Sort by",
+          "recursive": "Search in subfolders"
+        }
+      }
+    },
+    "error": {
+      "invalid_path": "The provided path does not exist or is not accessible."
+    }
+  }
+}
