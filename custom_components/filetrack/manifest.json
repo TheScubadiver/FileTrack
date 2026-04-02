@@ -1,12 +1,8 @@
 {
   "domain": "filetrack",
   "name": "FileTrack",
-  "codeowners": [
-    "@TheScubadiver"
-  ],
+  "codeowners": ["@TheScubadiver"],
   "config_flow": true,
-  "documentation": "https://github.com/TheScubadiver/FileTrack",
-  "issue_tracker": "https://github.com/TheScubadiver/FileTrack/issues",
   "iot_class": "local_polling",
-  "version": "1.2.0"
+  "version": "1.4.0"
 }
