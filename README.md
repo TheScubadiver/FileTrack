@@ -23,36 +23,12 @@ Sensors are created directly from the **Camera Gallery Card editor** — no YAML
 Add sensors directly to your `configuration.yaml` file:
 
 ```yaml
-sensor:
-  - platform: filetrack
-    name: Recordings
-    folder: /media/frigate/clips
-    sort: date
-    recursive: false
+filetrack:
+  sensors:
+    - name: Recordings
+      folder: /config/www/test
 ```
 *Note: Restart Home Assistant after adding YAML entries.*
-
----
-
-## Configuration Options
-
-| Option | Required | Default | Description |
-| :--- | :---: | :---: | :--- |
-| `name` | Yes | — | Sensor name |
-| `folder` | Yes | — | Path to monitor |
-| `sort` | No | `date` | `date`, `name`, or `size` |
-| `recursive` | No | `false` | Include subdirectories (`true` or `false`) |
-
----
-
-## Sensor Attributes
-
-| Attribute | Description |
-| :--- | :--- |
-| `path` | Monitored folder path |
-| `number_of_files` | File count |
-| `fileList` | List of matched file paths |
-| `sort` | Active sort order |
 
 ---
 
