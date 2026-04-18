@@ -3,6 +3,7 @@ CONF_FOLDER_PATHS = "folder"
 CONF_FILTER = "filter"
 CONF_SORT = "sort"
 CONF_RECURSIVE = "recursive"
+CONF_UNIQUE_ID = "unique_id"
 
 DEFAULT_FILTER = "*"
 DEFAULT_SORT = "date"

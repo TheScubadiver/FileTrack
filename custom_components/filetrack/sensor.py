@@ -6,7 +6,7 @@ from datetime import timedelta
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.components.sensor import SensorEntity, PLATFORM_SCHEMA
-from .const import DOMAIN, CONF_FOLDER_PATHS, CONF_FILTER, CONF_SORT, CONF_RECURSIVE, DEFAULT_FILTER, DEFAULT_SORT, DEFAULT_RECURSIVE, SORT_OPTIONS
+from .const import DOMAIN, CONF_FOLDER_PATHS, CONF_FILTER, CONF_SORT, CONF_RECURSIVE, CONF_UNIQUE_ID, DEFAULT_FILTER, DEFAULT_SORT, DEFAULT_RECURSIVE, SORT_OPTIONS
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(minutes=1)
@@ -17,6 +17,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_FILTER, default=DEFAULT_FILTER): cv.string,
     vol.Optional(CONF_SORT, default=DEFAULT_SORT): vol.In(SORT_OPTIONS),
     vol.Optional(CONF_RECURSIVE, default=DEFAULT_RECURSIVE): cv.boolean,
+    vol.Optional(CONF_UNIQUE_ID): cv.string,
 })
 
 
@@ -35,13 +36,17 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     """Sensor aanmaken via YAML configuratie (filetrack: sensors:)."""
     cfg = discovery_info if discovery_info is not None else config
     name = cfg["name"]
+    entry_id = cfg.get(CONF_UNIQUE_ID)
+    if entry_id is None:
+        entry_id = f"yaml_{name.lower().replace(' ', '_')}"
+    
     sensor = FileTrackSensor(
         folder_path=cfg[CONF_FOLDER_PATHS],
         name=name,
         filter_term=cfg.get(CONF_FILTER, DEFAULT_FILTER),
         sort=cfg.get(CONF_SORT, DEFAULT_SORT),
         recursive=cfg.get(CONF_RECURSIVE, DEFAULT_RECURSIVE),
-        entry_id=f"yaml_{name.lower().replace(' ', '_')}",
+        entry_id=entry_id,
     )
     async_add_entities([sensor], True)
 
