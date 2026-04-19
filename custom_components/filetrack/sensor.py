@@ -76,10 +76,9 @@ class FileTrackSensor(SensorEntity):
     _attr_icon = "mdi:folder"
     _attr_native_unit_of_measurement = "MB"
 
-    def __init__(self, folder_path, name, filter_term, sort, recursive, entry_id, config_entry=None):
+    def __init__(self, folder_path, name, filter_term, sort, recursive, entry_id):
         self._attr_name = name
         self._attr_unique_id = f"filetrack_{entry_id}"
-        self._config_entry = config_entry
         self._folder_path = os.path.join(folder_path, "")
         self._filter_term = filter_term
         self._sort = sort
