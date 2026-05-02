@@ -1,0 +1,43 @@
+add_sensor:
+  name: Add FileTrack Sensor
+  description: Dynamically add a new FileTrack sensor without restarting.
+  fields:
+    name:
+      name: Name
+      description: The friendly name for the sensor.
+      example: "Snapshots"
+      required: true
+      selector:
+        text:
+    folder_paths:
+      name: Folder Path
+      description: The full path to the directory you want to monitor.
+      example: "/config/www/snapshots"
+      required: true
+      selector:
+        text:
+    filter:
+      name: Filter
+      description: File pattern to match (e.g., *.jpg).
+      default: "*"
+      selector:
+        text:
+    sort:
+      name: Sort Order
+      description: The sort order of files in the directory.
+      default: "modified"
+      selector:
+        select:
+          options:
+            - label: "Last Modified"
+              value: "modified"
+            - label: "Created"
+              value: "created"
+            - label: "Alphabetical"
+              value: "alphabetical"
+    recursive:
+      name: Recursive
+      description: Whether to search subfolders.
+      default: false
+      selector:
+        boolean:
