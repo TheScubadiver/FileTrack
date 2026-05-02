@@ -1,0 +1,58 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up FileTrack",
+        "description": "Click Submit to enable FileTrack. Then use the Configure menu to add sensors."
+      }
+    },
+    "abort": {
+      "already_configured": "FileTrack is already added. Use the Configure menu to add sensors."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Manage Sensors",
+        "menu_options": {
+          "add_sensor": "Add a new FileTrack sensor",
+          "remove_sensor": "Remove FileTrack sensors"
+        }
+      },
+      "add_sensor": {
+        "title": "Add new sensor",
+        "data": {
+          "name": "Sensor Name",
+          "folder": "Folder Path",
+          "filter": "Filter (e.g. *.jpg)",
+          "sort": "Sort Criteria",
+          "recursive": "Search Subfolders"
+        },
+        "errors": {
+          "invalid_path": "Path must start with /config/www/"
+        }
+      },
+      "remove_sensor": {
+        "title": "Remove sensors",
+        "description": "Select the sensor(s) to be removed.\n*NOTE: Sensors in configuration.yaml cannot be removed here.*",
+        "data": {
+          "sensors": "Remove sensors:"
+        }
+      },
+      "confirm": {
+        "title": "Confirm removal",
+        "description": "You are about to permanently remove the following sensor(s):\n\n**{names}**",
+        "data": {
+          "confirm": "Yes, remove these sensor(s)"
+        }
+      }
+    },
+    "error": {
+      "no_selection": "Please select at least one sensor to remove."
+    },
+    "abort": {
+      "no_sensors": "There are no sensors to remove.",
+      "cancelled": "Operation cancelled."
+    }
+  }
+}
