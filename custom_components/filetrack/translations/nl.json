@@ -1,0 +1,58 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "FileTrack instellen",
+        "description": "Klik op Verzenden om FileTrack te activeren. Gebruik daarna het configuratiemenu om sensoren toe te voegen."
+      }
+    },
+    "abort": {
+      "already_configured": "FileTrack is al toegevoegd. Gebruik het configuratiemenu om sensoren toe te voegen."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Beheer sensoren",
+        "menu_options": {
+          "add_sensor": "Nieuwe FileTrack-sensor toevoegen",
+          "remove_sensor": "FileTrack-sensoren verwijderen"
+        }
+      },
+      "add_sensor": {
+        "title": "Nieuwe sensor toevoegen",
+        "data": {
+          "name": "Naam van de sensor",
+          "folder": "Map pad",
+          "filter": "Filter (bijv. *.jpg)",
+          "sort": "Sortering",
+          "recursive": "Submappen doorzoeken"
+        },
+        "errors": {
+          "invalid_path": "Het pad moet beginnen met /config/www/"
+        }
+      },
+      "remove_sensor": {
+        "title": "Sensoren verwijderen",
+        "description": "Selecteer de sensor(en) die je wilt verwijderen.\n*OPMERKING: Sensoren in configuration.yaml kunnen hier niet worden verwijderd.*",
+        "data": {
+          "sensors": "Te verwijderen sensoren"
+        }
+      },
+      "confirm": {
+        "title": "Bevestig verwijdering",
+        "description": "Je staat op het punt de volgende sensor(en) permanent te verwijderen:\n\n**{names}**",
+        "data": {
+          "confirm": "Ja, verwijder deze sensor(en)"
+        }
+      }
+    },
+    "error": {
+      "no_selection": "Selecteer minimaal één sensor om te verwijderen."
+    },
+    "abort": {
+      "no_sensors": "Er zijn geen sensoren om te verwijderen.",
+      "cancelled": "Bewerking geannuleerd."
+    }
+  }
+}
