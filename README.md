@@ -52,8 +52,8 @@ filetrack:
 | sort | string | **Optional** | One of 'name', 'date', or 'size'. Determines the sort order for viewing. `Default: date`
 | recursive | boolean | **Optional** | True or False; If True, the pattern filter `**` will match any files and zero or more directories, subdirectories and symbolic links to directories. **Note:** Using the `**` pattern in large directory trees will add significant delay. `Default: False`
 
-*Note: Restart Home Assistant after adding YAML entries.*
-
+*Note1: Restart Home Assistant after adding YAML entries.*
+*Note2: From FileTrack 2.0, the legacy YAML format (sensor: > platform: filetrack) is not supported. Follow the example above.*
 ---
 
 ## Removing Sensors
