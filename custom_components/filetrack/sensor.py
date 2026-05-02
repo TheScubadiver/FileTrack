@@ -6,6 +6,8 @@ from datetime import timedelta
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.components.sensor import SensorEntity, PLATFORM_SCHEMA
+from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.util import slugify
 from .const import DOMAIN, CONF_FOLDER_PATHS, CONF_FILTER, CONF_SORT, CONF_RECURSIVE, CONF_UNIQUE_ID, DEFAULT_FILTER, DEFAULT_SORT, DEFAULT_RECURSIVE, SORT_OPTIONS
 
 _LOGGER = logging.getLogger(__name__)
@@ -32,40 +34,42 @@ def get_files_list(folder_path, filter_term, sort, recursive):
         return sorted(files, key=os.path.getmtime, reverse=True)
 
 
-async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    """Sensor aanmaken via YAML configuratie (filetrack: sensors:)."""
-    cfg = discovery_info if discovery_info is not None else config
-    name = cfg["name"]
-    entry_id = cfg.get(CONF_UNIQUE_ID)
-    if entry_id is None:
-        entry_id = f"yaml_{name.lower().replace(' ', '_')}"
-    
-    sensor = FileTrackSensor(
-        folder_path=cfg[CONF_FOLDER_PATHS],
-        name=name,
-        filter_term=cfg.get(CONF_FILTER, DEFAULT_FILTER),
-        sort=cfg.get(CONF_SORT, DEFAULT_SORT),
-        recursive=cfg.get(CONF_RECURSIVE, DEFAULT_RECURSIVE),
-        entry_id=entry_id,
-    )
-    async_add_entities([sensor], True)
-
-
 async def async_setup_entry(hass, entry, async_add_entities):
     """Laad sensoren vanuit de opgeslagen configuratie."""
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN]["add_entities"] = async_add_entities
-
     stored = hass.data[DOMAIN].get("stored", {})
+    yaml_config = hass.data[DOMAIN].get("yaml_sensors", [])
     entities = []
+    
     for sc in stored.get("sensors", []):
+        unique_id = f"filetrack_{sc['id']}"
+        _LOGGER.debug("FileTrack: Preparing UI sensor: %s (unique_id: %s)", sc["name"], unique_id)
         entities.append(FileTrackSensor(
             sc[CONF_FOLDER_PATHS],
             sc["name"],
             sc.get(CONF_FILTER, DEFAULT_FILTER),
             sc.get(CONF_SORT, DEFAULT_SORT),
             sc.get(CONF_RECURSIVE, DEFAULT_RECURSIVE),
-            sc["id"]
+            f"filetrack_{sc['id']}",
+            config_entry=entry
+        ))
+    for yc in yaml_config:
+        name = yc["name"]
+        yaml_unique_id = yc.get(CONF_UNIQUE_ID)
+        if yaml_unique_id:
+            unique_id = yaml_unique_id
+        else:
+            unique_id = slugify(name)
+        _LOGGER.debug("FileTrack: Preparing YAML sensor: %s (unique_id: %s)", name, unique_id)
+        entities.append(FileTrackSensor(
+            yc[CONF_FOLDER_PATHS],
+            name,
+            yc.get(CONF_FILTER, DEFAULT_FILTER),
+            yc.get(CONF_SORT, DEFAULT_SORT),
+            yc.get(CONF_RECURSIVE, DEFAULT_RECURSIVE),
+            unique_id,
+            config_entry=entry           
         ))
     if entities:
         async_add_entities(entities, True)
@@ -76,9 +80,20 @@ class FileTrackSensor(SensorEntity):
     _attr_icon = "mdi:folder"
     _attr_native_unit_of_measurement = "MB"
 
-    def __init__(self, folder_path, name, filter_term, sort, recursive, entry_id):
+    def __init__(self, folder_path, name, filter_term, sort, recursive, entry_id, config_entry=None):
         self._attr_name = name
-        self._attr_unique_id = f"filetrack_{entry_id}"
+        self._attr_unique_id = entry_id
+        self._attr_suggested_object_id = slugify(name)
+
+        # Keep existing sensor_id for UI and YAML
+        if entry_id.startswith("filetrack_"):
+            self._attr_has_entity_name = True
+        else:
+            self.entity_id = f"sensor.{slugify(name)}"
+            self._attr_has_entity_name = False
+            
+        self._attr_config_entry_id = getattr(config_entry, 'entry_id', None)
+        self._config_entry = config_entry    
         self._folder_path = os.path.join(folder_path, "")
         self._filter_term = filter_term
         self._sort = sort
@@ -107,3 +122,9 @@ class FileTrackSensor(SensorEntity):
     @property
     def extra_state_attributes(self):
         return self._attributes
+    
+    @property
+    def device_info(self):
+        return {
+            "identifiers": {(DOMAIN, "filetrack_service_device")},
+        }
