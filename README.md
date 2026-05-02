@@ -15,25 +15,30 @@ A Home Assistant custom component that monitors folders and exposes their total 
 
 ## Usage & Configuration
 
-How to make a sensor:
+How to create a sensor:
 
-### Method 1 — Camera Gallery Card
+### Method 1 — FileTrack Integration
+Open **Settings → Devices & Services → FileTrack → Configure** (gear icon). Select "Add new FileTrack sensor". Enter at least a name and folder path then click Submit.
+
+<img width="444" height="470" alt="image" src="https://github.com/user-attachments/assets/94fae908-228c-4e1f-9da2-c17b4a8e1e54" />
+
+### Method 2 — Camera Gallery Card
 Sensors are created directly from the **[Camera Gallery Card](https://github.com/TheScubadiver/camera-gallery-card) Editor** — no YAML, service calls, or manual setup required.
 
 <img width="418" height="380" alt="image" src="https://github.com/user-attachments/assets/e0c5b505-f94b-48f8-b8a3-dbadee3cd41b" />
 
-### Method 2 — YAML
+### Method 3 — YAML
 Add sensors directly to your `configuration.yaml` file:
 
 ```yaml
-sensor:
-  - platform: filetrack
-    folder: /config/www/snapshots
-    filter: '*.jpg'
-    name: snapshots
-    unique_id: snapshots_jpg
-    sort: date
-    recursive: True
+filetrack:
+  sensors:
+    - folder: /config/www/snapshots
+      filter: '*.jpg'
+      name: Snapshots
+      unique_id: snapshots_jpg
+      sort: date
+      recursive: True
 ```
 
 #### YAML Configuration Variables
@@ -53,5 +58,5 @@ sensor:
 
 ## Removing Sensors
 
-* **UI/Service Sensors:** Go to **Settings → Devices & Services → FileTrack → Configure** to select and remove sensors added via the UI.
+* **UI/Service Sensors:** Open **Settings → Devices & Services → FileTrack → Configure** (gear icon). Select "Remove FileTrack sensors". Select sensors to remove and complete the confirmation. 
 * **YAML Sensors:** Remove the relevant entries from your `configuration.yaml` file and restart Home Assistant.
