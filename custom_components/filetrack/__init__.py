@@ -112,7 +112,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         add_entities = hass.data[DOMAIN].get("add_entities")
         if add_entities:
             from .sensor import FileTrackSensor
-            add_entities([FileTrackSensor(folder, name, filter_term, sort, recursive, sensor_id, config_entry=entry)], True)
+            add_entities([FileTrackSensor(folder, name, filter_term, sort, recursive, f"filetrack_{sensor_id}", config_entry=entry)], True)
         else:
             _LOGGER.warning("FileTrack: sensor platform not loaded yet, sensor appears after restart")
 
