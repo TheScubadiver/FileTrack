@@ -1,4 +1,7 @@
 DOMAIN = "filetrack"
+MANUFACTURER = "TheScubaDiver"
+MODEL = "Folder Monitor"
+
 CONF_FOLDER_PATHS = "folder"
 CONF_FILTER = "filter"
 CONF_SORT = "sort"

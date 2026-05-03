@@ -1,0 +1,49 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "FileTrack instellen",
+        "description": "FileTrack wordt direct geactiveerd. Gebruik het configuratiemenu om sensoren toe te voegen."
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Beheer sensoren",
+        "menu_options": {
+          "add_sensor": "Nieuwe sensor toevoegen",
+          "remove_sensor": "Bestaande sensoren verwijderen"
+        }
+      },
+      "add_sensor": {
+        "title": "Nieuwe sensor toevoegen",
+        "data": {
+          "name": "Naam van de sensor",
+          "folder": "Map pad",
+          "filter": "Filter (bijv. *.jpg)",
+          "sort": "Sortering",
+          "recursive": "Submappen doorzoeken"
+        }
+      },
+      "remove_sensor": {
+        "title": "Sensoren verwijderen",
+        "description": "Selecteer de sensor(en) die je wilt verwijderen.",
+        "data": {
+          "sensors": "Te verwijderen sensoren"
+        }
+      },
+      "confirm": {
+        "title": "Bevestig verwijdering",
+        "description": "Je staat op het punt de volgende sensor(en) permanent te verwijderen:\n\n**{names}**\n\nDit kan niet ongedaan worden gemaakt.",
+        "data": {
+          "confirm": "Ja, verwijder deze sensor(en)"
+        }
+      }
+    },
+    "abort": {
+      "no_sensors": "Er zijn geen sensoren om te verwijderen.",
+      "cancelled": "Bewerking geannuleerd."
+    }
+  }
+}
